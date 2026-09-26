@@ -28,6 +28,8 @@
     </scm>
     <properties>
         <java.version>25</java.version>
+        <protobuf.version>4.29.3</protobuf.version>
+        <grpc.version>1.84.0</grpc.version>
     </properties>
     <dependencies>
         <dependency>
