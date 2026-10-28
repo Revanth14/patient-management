@@ -1,7 +1,9 @@
 package io.revanth.patientservice.dto;
 
+import io.revanth.patientservice.dto.validators.CreatePatientValidationGroup;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +27,7 @@ public class PatientRequestDTO {
     @NotBlank(message = "Date of Birth is required")
     private String dateOfBirth;
 
-    @NotBlank(message = "Registered Date is required")
+
+    @NotBlank(groups = CreatePatientValidationGroup.class, message = "Registered Date is required")
     private String registeredDate;
  }
