@@ -2,12 +2,12 @@ package io.revanth.patientservice.service;
 
 import io.revanth.patientservice.dto.PatientRequestDTO;
 import io.revanth.patientservice.dto.PatientResponseDTO;
+import io.revanth.patientservice.exceptions.EmailAlreadyExistsException;
 import io.revanth.patientservice.mapper.PatientMapper;
 import io.revanth.patientservice.model.Patient;
 import io.revanth.patientservice.repository.PatientRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +26,9 @@ public class PatientService  {
     }
 
     public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
+        if (patientRepository.existsByEmail(patientRequestDTO.getEmail())) {
+            throw new EmailAlreadyExistsException("A Patient with this email exists" + patientRequestDTO.getEmail());
+        }
         Patient newPatient = patientRepository.save(
                 PatientMapper.toModel(patientRequestDTO)
         );
