@@ -4,6 +4,7 @@ import io.revanth.patientservice.dto.PatientRequestDTO;
 import io.revanth.patientservice.dto.PatientResponseDTO;
 import io.revanth.patientservice.exceptions.EmailAlreadyExistsException;
 import io.revanth.patientservice.exceptions.PatientNotFoundException;
+import io.revanth.patientservice.grpc.BillingServiceGrpcClient;
 import io.revanth.patientservice.mapper.PatientMapper;
 import io.revanth.patientservice.model.Patient;
 import io.revanth.patientservice.repository.PatientRepository;
@@ -16,9 +17,11 @@ import java.util.UUID;
 @Service
 public class PatientService  {
     private PatientRepository patientRepository;
+    private final BillingServiceGrpcClient billingServiceGrpcClient;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository,  BillingServiceGrpcClient billingServiceGrpcClient) {
         this.patientRepository = patientRepository;
+        this.billingServiceGrpcClient = billingServiceGrpcClient;
     }
 
     public List<PatientResponseDTO> getPatients() {
@@ -35,6 +38,10 @@ public class PatientService  {
         Patient newPatient = patientRepository.save(
                 PatientMapper.toModel(patientRequestDTO)
         );
+
+        billingServiceGrpcClient.createBillingAccount(newPatient.getId().toString(),
+                newPatient.getName(), newPatient.getEmail());
+
         return PatientMapper.toPatientResponseDTO(newPatient);
     }
 
