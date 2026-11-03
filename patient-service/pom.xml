@@ -86,17 +86,28 @@
             <version>3.2.0</version>
         </dependency>
 
+        <!-- gRPC Client -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-grpc-client</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
+
+            <!-- Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!-- Maven Compiler with Lombok -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+
                 <executions>
                     <execution>
                         <id>default-compile</id>
@@ -113,6 +124,7 @@
                             </annotationProcessorPaths>
                         </configuration>
                     </execution>
+
                     <execution>
                         <id>default-testCompile</id>
                         <phase>test-compile</phase>
@@ -130,6 +142,13 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Protobuf and gRPC Code Generation -->
+            <plugin>
+                <groupId>io.github.ascopes</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+            </plugin>
+
         </plugins>
     </build>
 
