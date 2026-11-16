@@ -1,5 +1,6 @@
 package io.revanth.authservice.service;
 
+import io.jsonwebtoken.JwtException;
 import io.revanth.authservice.dto.LoginRequestDTO;
 import io.revanth.authservice.model.User;
 import io.revanth.authservice.util.JwtUtil;
@@ -28,4 +29,18 @@ public class AuthService {
                 .map(u -> jwtUtil.generateToken(u.getEmail(),u.getRole()));
         return token;
     }
+
+    public boolean validateToken(String token) {
+        try {
+            jwtUtil.validateToken(token);
+            return true;
+        }
+        catch (JwtException e) {
+            return false;
+        }
+    }
+
+
+
+
 }
