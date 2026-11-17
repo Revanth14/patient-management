@@ -25,6 +25,7 @@ spring:
                 - Path=/api/patients/**
               filters:
                 - StripPrefix=1
+                - JwtValidation
 
             # Patient Service OpenAPI Documentation
             - id: api-docs-patient-route
